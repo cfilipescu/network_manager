@@ -16,7 +16,7 @@ through NetworkManager.
 ## Prerequisites
 
 Before you can use this project, ensure you have the following installed:
-- Rust and Cargo (latest stable version recommended)
+- Rust 1.89 or newer and Cargo
 - NetworkManager on your Linux distribution
 
 ## Installation
@@ -42,6 +42,22 @@ To use this project, follow these steps:
 
 This section provides basic examples of how to use the project to interact with
 NetworkManager through zbus.
+
+### Migrating to zbus 6
+
+This crate uses zbus 6. Applications that pass a `zbus::Connection` or other
+zbus types to these proxies must also use zbus 6.
+
+- Use `zbus::ObjectPath` and `zbus::OwnedObjectPath` for object paths.
+- Replace `zbus::zvariant::Value` and `OwnedValue` with `zbus::Variant` and
+  `zbus::OwnedVariant` for connection settings and other variant values.
+- Proxy builder setters such as `.path(...)` now return the builder directly;
+  errors are reported by `.build().await`.
+- Generated blocking proxies are no longer available. Use the async proxies,
+  or drive an async operation with `zbus::block_on`.
+
+See the [zbus 6 migration guide](https://z-galaxy.github.io/zbus/upgrading-to-6.html)
+for the full list of upstream changes.
 
 ## Contributing
 

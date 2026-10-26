@@ -30,7 +30,7 @@ async fn main() {
         .await
         .expect("Could not get NetworkManager");
 
-    //let settings_path = zbus::zvariant::OwnedObjectPath::try_from("org.freedesktop.NetworkManager.Settings".to_string());
+    //let settings_path = zbus::OwnedObjectPath::try_from("org.freedesktop.NetworkManager.Settings".to_string());
     //let settings_proxy = SettingsProxy::new_from_path(settings_path.unwrap(), &connection);
 
     let args: Vec<String> = env::args().collect();

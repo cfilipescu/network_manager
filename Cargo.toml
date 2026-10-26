@@ -3,6 +3,7 @@ name = "rusty_network_manager"
 description = "A crate for interacting with network_manager using zbus"
 version = "0.7.1"
 edition = "2024"
+rust-version = "1.89"
 license = "MIT"
 homepage = "https://github.com/KevinVoell/network_manager"
 repository = "https://github.com/KevinVoell/network_manager"
@@ -13,7 +14,7 @@ categories = []
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-zbus = "5.11.0"
+zbus = "6.1.0"
 bitflags = "2.9.4"
 num_enum = "0.7.4"
 
@@ -23,7 +24,7 @@ bindgen = "0.72.1"
 [dev-dependencies]
 tokio = { version = "1.47.1", features = ["full"] }
 tokio-stream = "0.1.17"
-zbus = "5.7.0"
+zbus = { version = "6.1.0", features = ["p2p"] }
 
 [features]
 default = ["full"]
