@@ -15,11 +15,11 @@ use zbus::{Connection, Result, proxy};
 
 impl DnsManagerProxy<'_> {
     pub async fn new_from_path(
-        device_path: zbus::OwnedObjectPath,
+        device_path: zbus::zvariant::OwnedObjectPath,
         connection: &Connection,
     ) -> Result<DnsManagerProxy<'_>> {
         DnsManagerProxy::builder(connection)
-            .path(device_path)
+            .path(device_path)?
             .build()
             .await
     }
@@ -36,7 +36,7 @@ pub trait DnsManager {
     #[zbus(property)]
     fn configuration(
         &self,
-    ) -> zbus::Result<Vec<std::collections::HashMap<String, zbus::OwnedVariant>>>;
+    ) -> zbus::Result<Vec<std::collections::HashMap<String, zbus::zvariant::OwnedValue>>>;
 
     /// Mode property
     #[zbus(property)]

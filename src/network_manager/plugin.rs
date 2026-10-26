@@ -16,9 +16,9 @@ TOOD:
 use zbus::{Connection, Result, proxy};
 
 impl PluginProxy<'_> {
-    pub async fn new_from_path(device_path: zbus::OwnedObjectPath, connection: &Connection) -> Result<PluginProxy<'_>> {
+    pub async fn new_from_path(device_path: zbus::zvariant::OwnedObjectPath, connection: &Connection) -> Result<PluginProxy<'_>> {
         PluginProxy::builder(connection)
-        .path(device_path)
+        .path(device_path)?
         .build()
         .await
     }
@@ -36,7 +36,7 @@ pub trait Plugin {
         &self,
         connection: std::collections::HashMap<
             &str,
-            std::collections::HashMap<&str, zbus::Variant<'_>>,
+            std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
         >,
     ) -> zbus::Result<()>;
 
@@ -45,9 +45,9 @@ pub trait Plugin {
         &self,
         connection: std::collections::HashMap<
             &str,
-            std::collections::HashMap<&str, zbus::Variant<'_>>,
+            std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
         >,
-        details: std::collections::HashMap<&str, zbus::Variant<'_>>,
+        details: std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
     ) -> zbus::Result<()>;
 
     /// Disconnect method
@@ -58,7 +58,7 @@ pub trait Plugin {
         &self,
         settings: std::collections::HashMap<
             &str,
-            std::collections::HashMap<&str, zbus::Variant<'_>>,
+            std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
         >,
     ) -> zbus::Result<String>;
 
@@ -67,14 +67,14 @@ pub trait Plugin {
         &self,
         connection: std::collections::HashMap<
             &str,
-            std::collections::HashMap<&str, zbus::Variant<'_>>,
+            std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
         >,
     ) -> zbus::Result<()>;
 
     /// SetConfig method
     fn set_config(
         &self,
-        config: std::collections::HashMap<&str, zbus::Variant<'_>>,
+        config: std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
     ) -> zbus::Result<()>;
 
     /// SetFailure method
@@ -83,20 +83,20 @@ pub trait Plugin {
     /// SetIp4Config method
     fn set_ip4_config(
         &self,
-        config: std::collections::HashMap<&str, zbus::Variant<'_>>,
+        config: std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
     ) -> zbus::Result<()>;
 
     /// SetIp6Config method
     fn set_ip6_config(
         &self,
-        config: std::collections::HashMap<&str, zbus::Variant<'_>>,
+        config: std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
     ) -> zbus::Result<()>;
 
     /// Config signal
     #[zbus(signal)]
     fn config(
         &self,
-        config: std::collections::HashMap<&str, zbus::Variant<'_>>,
+        config: std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
     ) -> zbus::Result<()>;
 
     /// Failure signal
@@ -107,14 +107,14 @@ pub trait Plugin {
     #[zbus(signal)]
     fn ip4_config(
         &self,
-        ip4config: std::collections::HashMap<&str, zbus::Variant<'_>>,
+        ip4config: std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
     ) -> zbus::Result<()>;
 
     /// Ip6Config signal
     #[zbus(signal)]
     fn ip6_config(
         &self,
-        ip6config: std::collections::HashMap<&str, zbus::Variant<'_>>,
+        ip6config: std::collections::HashMap<&str, zbus::zvariant::Value<'_>>,
     ) -> zbus::Result<()>;
 
     /// LoginBanner signal
